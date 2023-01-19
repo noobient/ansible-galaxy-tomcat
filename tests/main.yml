@@ -6,3 +6,4 @@
       vars:
         uid: 1234
         gid: '1234'
+        java_version: 8

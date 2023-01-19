@@ -1,0 +1,20 @@
+---
+# Debian:
+# - openjdk-8-jre-headless
+# - openjdk-11-jre-headless
+# - openjdk-17-jre-headless
+#
+# EL:
+# - java-1.8.0-openjdk-headless
+# - java-11-openjdk-headless
+# - java-17-openjdk-headless
+#
+# Facepalm...
+
+- set_fact:
+    pkg_java_ver: "{% if java_version is defined %}{% if ansible_os_family == 'RedHat' and java_version | string == '8' %}1.8.0{% else %}{{ java_version }}{% endif %}{% else %}{{ default_java_version }}{% endif %}"
+
+- name: "Install Java {{ pkg_java_ver }}"
+  package:
+    name: "{% if ansible_os_family == 'RedHat' %}java-{{ pkg_java_ver }}-openjdk-headless{% else %}openjdk-{{ pkg_java_ver }}-jre-headless{% endif %}"
+    state: latest

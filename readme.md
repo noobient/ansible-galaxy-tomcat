@@ -10,6 +10,7 @@ This role installs, configures, and upgrades Tomcat instances.
 |---|---|---|---|
 | `uid` | no | `1234` | UID to run Tomcat under. Defaults to `53`. |
 | `gid` | no | `1234` | GID to run Tomcat under. Defaults to `53`. |
+| `java_version` | no | `17` | Java version to install. Supported values are `8`, `11`, `17`. Defaults to `17`. |
 
 ## Examples
 
@@ -19,6 +20,7 @@ This role installs, configures, and upgrades Tomcat instances.
   vars:
     uid: 1234
     gid: 1234
+    java_version: 17
 ```
 
 ## Return Values
