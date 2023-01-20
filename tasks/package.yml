@@ -1,0 +1,61 @@
+---
+- set_fact:
+    eff_tomcat_ver: "{{ tomcat_version | default(default_tomcat_version) }}"
+    eff_tomcat_home: "{{ (tomcat_home | default(default_tomcat_home)).rstrip('/') }}"
+
+# We need to do this separately, because set_fact happens in random order, so
+# eff_tomcat_home may be still undefined.
+- set_fact:
+    eff_tomcat_base: "{{ eff_tomcat_home.split('/')[:-1] | join('/') }}" # parent dir of tomcat_home
+
+- name: "Obtain Tomcat {{ eff_tomcat_ver }}"
+  get_url:
+    url: "https://archive.apache.org/dist/tomcat/tomcat-{{ eff_tomcat_ver.split('.')[0] }}/v{{ eff_tomcat_ver }}/bin/apache-tomcat-{{ eff_tomcat_ver }}.tar.gz"
+    dest: "/usr/local/src/apache-tomcat-{{ eff_tomcat_ver }}.tar.gz"
+    owner: tomcat
+    group: tomcat
+    mode: '0644'
+  register: dl_tomcat_pkg
+
+- name: Check Tomcat parent directory
+  stat:
+    path: "{{ eff_tomcat_base }}"
+  register: check_tomcat_base
+
+- name: Create Tomcat parent directory
+  file:
+    path: "{{ eff_tomcat_base }}"
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: '0755' # FIXME should this be more strict? Probably not.
+  when: not check_tomcat_base.stat.exists
+
+- name: Check Tomcat main directory
+  stat:
+    path: "{{ eff_tomcat_base }}/apache-tomcat-{{ eff_tomcat_ver }}"
+  register: check_tomcat_dir
+
+- name: "Extract Tomcat {{ eff_tomcat_ver }}" # noqa no-handler
+  unarchive:
+    src: "/usr/local/src/apache-tomcat-{{ eff_tomcat_ver }}.tar.gz"
+    dest: "{{ eff_tomcat_base }}"
+    remote_src: true
+  when: dl_tomcat_pkg.changed or not check_tomcat_dir.stat.exists
+#  register: tomcat_extract
+
+- name: Set permissions on Tomcat main directory
+  file:
+    path: "{{ eff_tomcat_base }}/apache-tomcat-{{ eff_tomcat_ver }}"
+    owner: tomcat
+    group: tomcat
+    recurse: true
+# Needless check, chown is idempotent anyway. If permissions need changing
+# without a version bump, this would break that too.
+#  when: tomcat_extract.changed
+
+- name: "Set Tomcat {{ eff_tomcat_ver }} active"
+  file:
+    src: "{{ eff_tomcat_base }}/apache-tomcat-{{ eff_tomcat_ver }}"
+    dest: "{{ eff_tomcat_home }}"
+    state: link

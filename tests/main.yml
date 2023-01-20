@@ -1,9 +1,28 @@
 ---
 - hosts: 127.0.0.1
   tasks:
+
+    # Test all parameters
     - include_role:
         name: "{{ playbook_dir.split('/')[:-1] | last }}"
       vars:
         uid: 1234
         gid: '1234'
         java_version: 8
+        tomcat_version: 9.0.37
+        tomcat_home: /foo/tomcat/ # add erroneous trailing slash intentionally
+
+    # Test upgrades
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      vars:
+        java_version: 11
+        tomcat_home: /foo/tomcat
+
+    # Test defaults
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+
+    # Test idempotency
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
