@@ -1,5 +1,9 @@
 ---
 - include_tasks: update.yml
 - include_tasks: unixcred.yml
-- include_tasks: java.yml
+
+- include_role:
+    name: bviktor.java
+  when: eff_install_java
+
 - include_tasks: package.yml

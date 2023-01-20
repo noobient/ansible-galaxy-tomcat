@@ -2,4 +2,5 @@
 - name: Update APT cache
   apt:
     update_cache: true
-  when: ansible_os_family == 'Debian'
+  register: updated_apt_cache
+  when: ansible_os_family == 'Debian' and updated_apt_cache is not defined
