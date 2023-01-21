@@ -7,3 +7,4 @@
   when: eff_install_java
 
 - include_tasks: package.yml
+- include_tasks: service.yml

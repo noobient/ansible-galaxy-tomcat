@@ -13,6 +13,8 @@ This role installs, configures, and upgrades Tomcat instances.
 | `install_java` | no | `false` | Install Java or not. Defaults to `true`. |
 | `tomcat_version` | no | `10.0.27` | Tomcat version to install. Unlike `java_version`, this needs to be the specific, full version string. Default value updated occasionally to latest. |
 | `tomcat_home` | no | `/opt/apache-tomcat` | Tomcat installation home. Defaults to `/opt/apache-tomcat`. Note that this isn't a directory, this is a symlink, so do not add a trailing slash. |
+| `java_options` | no | `-Djava.net.preferIPv4Stack=false` | Java runtime options. Defaults to `-Djava.security.egd=file:/dev/urandom -Djava.net.preferIPv4Stack=true` |
+| `catalina_options` | no | `-Xms1G -Xmx8G` | Catalina runtime options. Defaults to `-Xms512M -Xmx4G -server -XX:+UseParallelGC`. |
 
 ## Examples
 
@@ -28,6 +30,8 @@ This role installs, configures, and upgrades Tomcat instances.
     install_java: false
     tomcat_version: 10.0.27
     tomcat_home: /opt/apache-tomcat
+    java_options: -Djava.net.preferIPv4Stack=false
+    catalina_options: -Xms1G -Xmx8G
 ```
 
 ## Return Values

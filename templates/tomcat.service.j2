@@ -1,0 +1,23 @@
+[Unit]
+Description=Tomcat servlet container
+After=network.target
+
+[Service]
+Type=simple
+
+User=tomcat
+Group=tomcat
+
+Environment="JAVA_HOME=/usr/lib/jvm/{% if ansible_os_family == 'Debian' %}default-java{% else %}jre{% endif %}"
+Environment="JAVA_OPTS={{ eff_java_options }}"
+
+Environment="CATALINA_BASE={{ eff_tomcat_home }}"
+Environment="CATALINA_HOME={{ eff_tomcat_home }}"
+Environment="CATALINA_PID={{ eff_tomcat_home }}/temp/tomcat.pid"
+Environment="CATALINA_OPTS={{ eff_catalina_options }}"
+
+ExecStart={{ eff_tomcat_home}}/bin/startup.sh
+ExecStop={{ eff_tomcat_home }}/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target

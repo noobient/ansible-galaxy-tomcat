@@ -1,0 +1,21 @@
+---
+# https://linuxize.com/post/how-to-install-tomcat-9-on-centos-7/
+- name: Deploy Tomcat systemd unit
+  template:
+    src: tomcat.service.j2
+    dest: /etc/systemd/system/tomcat.service
+    owner: root
+    group: root
+    mode: '0644'
+  register: tomcat_unit
+
+- name: Reload systemd config # noqa no-handler
+  systemd:
+    daemon_reload: true
+  when: tomcat_unit.changed
+
+- name: Enable Tomcat service
+  systemd:
+    name: tomcat.service
+    enabled: true
+    state: started
