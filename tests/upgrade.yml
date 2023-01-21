@@ -1,0 +1,6 @@
+---
+- include_role:
+    name: "{{ playbook_dir.split('/')[:-1] | last }}"
+  vars:
+    install_java: 'false'
+    tomcat_home: /foo/tomcat

@@ -1,0 +1,37 @@
+---
+- name: Install cURL
+  package:
+    name: curl
+    state: latest
+  register: installed_curl
+  when: installed_curl is not defined
+
+- name: Wait for Tomcat to start up
+  wait_for:
+    path: "{{ eff_tomcat_home }}/logs/catalina.out"
+    search_regex: 'Server startup in'
+
+- name: Check Tomcat landing page
+  shell:
+    cmd: curl --silent localhost:8080 | grep title
+  register: curl_tomcat_landing
+
+- debug:
+    msg: "{{ curl_tomcat_landing.stdout_lines }}"
+
+- name: Stop Tomcat
+  systemd:
+    name: tomcat.service
+    state: stopped
+
+- name: Wait for Tomcat to shut down
+  wait_for:
+    path: "{{ eff_tomcat_home }}/logs/catalina.out"
+    search_regex: 'Destroying ProtocolHandler'
+
+# Otherwise we'll find previous startup and shutdown messages while Tomcat is
+# still starting up / shutting down.
+- name: Remove Tomcat log file
+  file:
+    path: "{{ eff_tomcat_home }}/logs/catalina.out"
+    state: absent
