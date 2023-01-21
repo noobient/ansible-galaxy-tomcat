@@ -1,10 +1,13 @@
 ---
+# TODO On EL, cURL is installed by default. On top of that, on AlmaLinux 9, curl
+# is broken, and on Fedora, curl-minimal is broken. So just skip it altogether.
+# https://bugs.launchpad.net/tripleo/+bug/1953156
 - name: Install cURL
   package:
     name: curl
     state: latest
   register: installed_curl
-  when: installed_curl is not defined
+  when: installed_curl is not defined and ansible_os_family != 'RedHat'
 
 - name: Wait for Tomcat to start up
   wait_for:
