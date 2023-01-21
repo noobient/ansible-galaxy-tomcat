@@ -14,8 +14,13 @@
     daemon_reload: true
   when: tomcat_unit.changed
 
+# TODO role parameter?
 - name: Enable Tomcat service
   systemd:
     name: tomcat.service
     enabled: true
+
+- name: Start Tomcat service
+  systemd:
+    name: tomcat.service
     state: started
