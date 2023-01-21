@@ -11,7 +11,7 @@ This role installs, configures, and upgrades Tomcat instances.
 | `uid` | no | `1234` | UID to run Tomcat under. Defaults to `53`. |
 | `gid` | no | `1234` | GID to run Tomcat under. Defaults to `53`. |
 | `install_java` | no | `false` | Install Java or not. Defaults to `true`. |
-| `tomcat_version` | no | `10.0.27` | Tomcat version to install. Unlike `java_version`, this needs to be the specific, full version string. Default value updated occasionally to latest. |
+| `tomcat_version` | no | `10.0.27` | Tomcat version to install. This needs to be the specific, full version string. Default value updated occasionally to latest. |
 | `tomcat_home` | no | `/opt/apache-tomcat` | Tomcat installation home. Defaults to `/opt/apache-tomcat`. Note that this isn't a directory, this is a symlink, so do not add a trailing slash. |
 
 ## Examples
