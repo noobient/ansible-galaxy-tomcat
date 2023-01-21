@@ -2,13 +2,18 @@
 Description=Tomcat servlet container
 After=network.target
 
+# TODO How did this work with 'simple' before?
+# Maybe it is possible to prevent started state until 'Server startup' appears
+# in catalina.out? Same for stopped state with 'Destroyed ProtocolHandler'.
 [Service]
-Type=simple
+Type=forking
 
 User=tomcat
 Group=tomcat
 
-Environment="JAVA_HOME=/usr/lib/jvm/{% if ansible_os_family == 'Debian' %}default-java{% else %}jre{% endif %}"
+# TODO It's impossible to determine reliably with the various distros, flavors,
+# and versions. Only required for debugging anyway, so leave this out for now.
+#Environment="JAVA_HOME=/usr/lib/jvm/{% if ansible_os_family == 'Debian' %}default-java{% else %}jre{% endif %}"
 Environment="JAVA_OPTS={{ eff_java_options }}"
 
 Environment="CATALINA_BASE={{ eff_tomcat_home }}"
