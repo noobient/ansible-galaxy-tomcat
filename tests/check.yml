@@ -14,9 +14,10 @@
     path: "{{ eff_tomcat_home }}/logs/catalina.out"
     search_regex: 'Server startup in'
 
-- name: Check Tomcat landing page
+- name: Check Tomcat landing page # noqa command-instead-of-module
   shell:
     cmd: curl --silent localhost:8080 | grep title
+  changed_when: false
   register: curl_tomcat_landing
 
 - debug:
