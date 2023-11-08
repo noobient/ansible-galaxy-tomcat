@@ -20,10 +20,10 @@ This role installs, configures, and upgrades Tomcat instances.
 
 ```yml
 - include_role:
-    name: bviktor.tomcat
+    name: noobient.tomcat
 
 - include_role:
-    name: bviktor.tomcat
+    name: noobient.tomcat
   vars:
     uid: 1234
     gid: 1234
