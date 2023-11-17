@@ -1,7 +1,7 @@
 ---
 # This is the ID used on CentOS 7, let's default to that.
 default_tomcat_id: 53
-default_tomcat_version: 10.0.27
+default_tomcat_version: 10.1.16
 default_tomcat_home: /opt/apache-tomcat
 eff_install_java: "{{ install_java | default(true) | bool }}"
 eff_java_options: "{{ java_options | default('-Djava.security.egd=file:/dev/urandom -Djava.net.preferIPv4Stack=true') | string }}"
