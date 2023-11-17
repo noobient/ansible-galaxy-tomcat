@@ -9,10 +9,14 @@
   register: installed_curl
   when: installed_curl is not defined and ansible_os_family != 'RedHat'
 
+# TODO https://github.com/ansible/ansible/issues/79683
 - name: Wait for Tomcat to start up
-  wait_for:
-    path: "{{ eff_tomcat_home }}/logs/catalina.out"
-    search_regex: 'Server startup in'
+#  wait_for:
+#    path: "{{ eff_tomcat_home }}/logs/catalina.out"
+#    search_regex: 'Server startup in'
+  shell:
+    cmd: "while true; do grep 'Server startup in' {{ eff_tomcat_home }}/logs/catalina.out && break; sleep 1; done"
+  changed_when: false
 
 - name: Check Tomcat landing page # noqa command-instead-of-module
   shell:
