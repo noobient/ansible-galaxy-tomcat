@@ -13,7 +13,7 @@ Group=tomcat
 
 # TODO It's impossible to determine reliably with the various distros, flavors,
 # and versions. Only required for debugging anyway, so leave this out for now.
-#Environment="JAVA_HOME=/usr/lib/jvm/{% if ansible_os_family == 'Debian' %}default-java{% else %}jre{% endif %}"
+#Environment="JAVA_HOME=/usr/lib/jvm/{% if ansible_facts['os_family'] == 'Debian' %}default-java{% else %}jre{% endif %}"
 Environment="JAVA_OPTS={{ eff_java_options }}"
 
 Environment="CATALINA_BASE={{ eff_tomcat_home }}"
