@@ -43,7 +43,6 @@ N/A
 | Platform | Support | Status |
 |---|---|---|
 | Linter | ✅ | [![Lint](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/lint.yml/badge.svg)](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/lint.yml) |
-| AlmaLinux 8 | ✅ | [![AlmaLinux 8](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/almalinux-8.yml/badge.svg)](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/almalinux-8.yml) |
 | AlmaLinux 9 | ✅ | [![AlmaLinux 9](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/almalinux-9.yml/badge.svg)](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/almalinux-9.yml) |
 | AlmaLinux 10 | ✅ | [![AlmaLinux 10](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/almalinux-10.yml/badge.svg)](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/almalinux-10.yml) |
 | Fedora 42 | ✅ | [![Fedora 42](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/fedora-42.yml/badge.svg)](https://github.com/noobient/ansible-galaxy-tomcat/actions/workflows/fedora-42.yml) |
